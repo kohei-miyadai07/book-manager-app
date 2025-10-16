@@ -1,0 +1,10 @@
+CREATE TABLE book (
+    id UUID PRIMARY KEY,
+    title VARCHAR(300) NOT NULL,
+    description TEXT,
+    isbn VARCHAR(40) NOT NULL UNIQUE,
+    jan_code VARCHAR(40) UNIQUE,
+    create_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    update_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    version INTEGER NOT NULL
+);
