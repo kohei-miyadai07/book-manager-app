@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>書籍新規登録</title>
+    <style>
+      .error-message {
+        color: red;
+        font-size: 0.9em;
+        display: block; /* エラーメッセージを改行して表示 */
+        margin-top: 5px;
+      }
+      .global-error {
+        border: 1px solid red;
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: #ffeaea;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>書籍新規登録</h1>
+
+    <form
+      th:action="@{/books/new/register-book}"
+      th:object="${bookForm}"
+      method="post"
+    >
+      <div>
+        <label for="title">書籍名:</label>
+        <input type="text" id="title" th:field="*{title}" maxlength="300" />
+        <span
+          th:if="${#fields.hasErrors('title')}"
+          th:errors="*{title}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <div>
+        <label for="description">説明:</label>
+        <textarea
+          id="description"
+          th:field="*{description}"
+          maxlength="500"
+        ></textarea>
+        <span
+          th:if="${#fields.hasErrors('description')}"
+          th:errors="*{description}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <div>
+        <label for="isbn">ISBNコード:</label>
+        <input type="text" id="isbn" th:field="*{isbn}" />
+        <span
+          th:if="${#fields.hasErrors('isbn')}"
+          th:errors="*{isbn}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <div>
+        <label for="janCode">書籍JANコード:</label>
+        <input type="text" id="janCode" th:field="*{janCode}" />
+        <span
+          th:if="${#fields.hasErrors('janCode')}"
+          th:errors="*{janCode}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <button type="submit">作成</button>
+      <a th:href="@{/books}">キャンセル (一覧へ)</a>
+    </form>
+  </body>
+</html>

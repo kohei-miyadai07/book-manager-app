@@ -21,7 +21,7 @@ public class BookForm {
 
     // ISBNコードの正規表現バリデーション
     @NotBlank(message = "ISBNコードは必須です")
-    @Pattern(regexp = "^978-?\\d-?\\d{2}-?\\d{6}-?\\d$", message = "ISBNコードの形式が不正です")
+    @Pattern(regexp = "97[89]([- ])(?=.{13}$)\\d{1,5}\\1\\d{1,7}\\1\\d{1,6}\\1\\d", message = "ISBNコードの形式が不正です")
     private String isbn;
 
     // 書籍JANコードの正規表現バリデーション
