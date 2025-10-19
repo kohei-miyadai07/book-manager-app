@@ -7,13 +7,11 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.ne.zaq.jcom.book_manager_app.book.model.Book;
 import jp.ne.zaq.jcom.book_manager_app.book.service.BookService;
@@ -69,8 +67,9 @@ public class BookController {
 	// 編集フォーム表示
 	@GetMapping("/{bookId}/edit")
 	public String editForm(@PathVariable UUID bookId, Model model) {
+		Book book = bookService.findById(bookId);
+
 		if (!model.containsAttribute("bookForm")) {
-			Book book = bookService.findById(bookId);
 			BookForm form = new BookForm();
 			form.setId(book.getId());
 			form.setTitle(book.getTitle());
@@ -80,6 +79,7 @@ public class BookController {
 			form.setVersion(book.getVersion());
 			model.addAttribute("bookForm", form);
 		}
+
 		model.addAttribute("bookId", bookId);
 		return "book/edit";
 	}
@@ -87,22 +87,20 @@ public class BookController {
 	// 更新実行
 	@PostMapping("/{bookId}/edit/update-book")
 	public String updateBook(@PathVariable UUID bookId,
-			@Validated @ModelAttribute BookForm bookForm,
-			BindingResult result,
-			RedirectAttributes redirectAttributes) {
+			@Valid @ModelAttribute BookForm bookForm,
+			BindingResult bindingResult,
+			Model model) {
 
-		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("bookForm", bookForm);
-			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.bookForm", result);
-			return "redirect:/books/" + bookId + "/edit";
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("bookId", bookId);
+			return "book/edit";
 		}
 
 		Book updatedBook = new Book(
 				bookForm.getTitle(),
 				bookForm.getDescription(),
 				bookForm.getIsbn(),
-				bookForm.getJanCode()
-				);
+				bookForm.getJanCode());
 		updatedBook.setVersion(bookForm.getVersion());
 
 		bookService.update(bookId, updatedBook);
