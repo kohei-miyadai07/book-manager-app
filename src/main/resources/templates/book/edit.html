@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>書籍情報編集</title>
+    <style>
+      .error-message {
+        color: red;
+        font-size: 0.9em;
+        display: block;
+        margin-top: 5px;
+      }
+      .global-error {
+        border: 1px solid red;
+        padding: 10px;
+        margin-bottom: 15px;
+        background-color: #ffeaea;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>書籍情報編集</h1>
+
+    <th:block
+      th:with="br=${#vars['org.springframework.validation.BindingResult.bookForm']}"
+    >
+      <div
+        th:if="${br != null and br.globalErrorCount > 0}"
+        class="global-error"
+      >
+        <p>処理中に以下のエラーが発生しました:</p>
+        <ul>
+          <li
+            th:each="err : ${br.globalErrors}"
+            th:text="${err.defaultMessage}"
+          >
+            グローバルエラーメッセージ
+          </li>
+        </ul>
+      </div>
+    </th:block>
+
+    <form
+      th:action="@{/books/{bookId}/edit/update-book(bookId=${bookId})}"
+      th:object="${bookForm}"
+      method="post"
+    >
+      <input type="hidden" th:field="*{version}" />
+
+      <div>
+        <label for="title">書籍名:</label>
+        <input type="text" id="title" th:field="*{title}" maxlength="300" />
+        <span
+          th:if="${#fields.hasErrors('title')}"
+          th:errors="*{title}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <div>
+        <label for="description">説明:</label>
+        <textarea
+          id="description"
+          th:field="*{description}"
+          maxlength="500"
+        ></textarea>
+        <span
+          th:if="${#fields.hasErrors('description')}"
+          th:errors="*{description}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <div>
+        <label for="isbn">ISBNコード:</label>
+        <input type="text" id="isbn" th:field="*{isbn}" />
+        <span
+          th:if="${#fields.hasErrors('isbn')}"
+          th:errors="*{isbn}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <div>
+        <label for="janCode">書籍JANコード:</label>
+        <input type="text" id="janCode" th:field="*{janCode}" />
+        <span
+          th:if="${#fields.hasErrors('janCode')}"
+          th:errors="*{janCode}"
+          class="error-message"
+        ></span>
+      </div>
+      <br />
+
+      <button type="submit">更新</button>
+      <a th:href="@{/books}">一覧に戻る</a>
+    </form>
+
+    <hr />
+
+    <h2>書籍の削除</h2>
+    <form
+      th:action="@{/books/{bookId}/edit/delete-book(bookId=${bookId})}"
+      method="post"
+      onsubmit="return confirm('本当にこの書籍を削除してもよろしいですか？');"
+    >
+      <button type="submit">削除</button>
+    </form>
+  </body>
+</html>

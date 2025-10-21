@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${book.title} + ' - 詳細'" />
+    <style>
+      dt {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      dd {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 th:text="${book.title} + ' の詳細'">書籍の詳細</h1>
+
+    <dl>
+      <dt>ID:</dt>
+      <dd th:text="${book.id}"></dd>
+
+      <dt>書籍名:</dt>
+      <dd th:text="${book.title}"></dd>
+
+      <dt>説明:</dt>
+      <dd th:text="${book.description}"></dd>
+
+      <dt>ISBNコード:</dt>
+      <dd th:text="${book.isbn}"></dd>
+
+      <dt>書籍JANコード:</dt>
+      <dd th:text="${book.janCode}"></dd>
+
+      <dt>バージョン:</dt>
+      <dd th:text="${book.version}"></dd>
+    </dl>
+
+    <a th:href="@{/books/{bookId}/edit(bookId=${book.id})}">編集</a>
+    |
+    <a th:href="@{/books}">一覧に戻る</a>
+  </body>
+</html>
