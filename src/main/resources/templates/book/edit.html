@@ -19,8 +19,8 @@
     </style>
   </head>
   <body>
+    <div th:insert="fragment/header :: header"></div>
     <h1>書籍情報編集</h1>
-
     <th:block
       th:with="br=${#vars['org.springframework.validation.BindingResult.bookForm']}"
     >

@@ -109,3 +109,30 @@ VALUES (
     , NOW()
     , 1
 );
+
+INSERT 
+INTO user_account( 
+    user_name
+    , password
+    , authority
+    , create_at
+    , update_at
+    , version
+) 
+VALUES ( 
+    'reader'
+    , '$2a$10$rxvOorKZ6MGjTmjcHQwWNegjrf31.8BOWc35ROK42G76RfH3Ndz7W'
+    , 'READ'
+    , NOW()
+    , NOW()
+    , 1
+) 
+, ( 
+    'writer'
+    , '$2a$10$ebnQjqZokV65jyqiMTQ7mOl0NBzUaXYBkBBkP00lRVT81eoB9J2xu'
+    , 'WRITE'
+    , NOW()
+    , NOW()
+    , 1
+);
+

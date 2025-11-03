@@ -14,8 +14,8 @@
     </style>
   </head>
   <body>
+    <div th:insert="fragment/header :: header"></div>
     <h1 th:text="${book.title} + ' の詳細'">書籍の詳細</h1>
-
     <dl>
       <dt>ID:</dt>
       <dd th:text="${book.id}"></dd>

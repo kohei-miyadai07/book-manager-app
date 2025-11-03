@@ -20,7 +20,7 @@
   </head>
   <body>
     <h1>書籍新規登録</h1>
-
+    <div th:insert="fragment/header :: header"></div>
     <form
       th:action="@{/books/new/register-book}"
       th:object="${bookForm}"

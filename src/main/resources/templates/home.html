@@ -5,6 +5,7 @@
     <title>ホーム画面</title>
   </head>
   <body>
+    <div th:insert="fragment/header :: header"></div>
     <h1>書籍管理アプリ</h1>
     <p><a th:href="@{/books}">書籍情報一覧へ</a></p>
   </body>
